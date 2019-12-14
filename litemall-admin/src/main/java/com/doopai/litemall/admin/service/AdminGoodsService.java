@@ -187,6 +187,7 @@ public class AdminGoodsService {
             }
             else if(attribute.getDeleted()){
                 attributeService.deleteByGid(attribute.getId());
+                attributeService.deleteById(attribute.getId());
             }
             else if(attribute.getUpdateTime() == null){
                 attributeService.updateById(attribute);
