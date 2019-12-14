@@ -1,0 +1,16 @@
+spring:
+  profiles:
+    active: database, core, apollo
+  messages:
+    encoding: UTF-8
+
+server:
+  port: 8082
+
+logging:
+  level:
+    root:  ERROR
+    org.springframework:  ERROR
+    org.mybatis:  ERROR
+    com.doopai.litemall:  ERROR
+    com.doopai.litemall.apollo:  DEBUG
