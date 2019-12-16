@@ -146,6 +146,7 @@ public class AdminGoodsService {
             return error;
         }
 
+        // 商品表里面有一个字段retailPrice记录当前商品的最低价
         LitemallGoods goods = goodsAllinone.getGoods();
         LitemallGoodsAttribute[] attributes = goodsAllinone.getAttributes();
         LitemallGoodsSpecification[] specifications = goodsAllinone.getSpecifications();
@@ -154,6 +155,15 @@ public class AdminGoodsService {
         //将生成的分享图片地址写入数据库
         String url = qCodeService.createGoodShareImage(goods.getId().toString(), goods.getPicUrl(), goods.getName());
         goods.setShareUrl(url);
+
+        BigDecimal retailPrice = new BigDecimal(Integer.MAX_VALUE);
+        for (LitemallGoodsProduct product : products) {
+            BigDecimal productPrice = product.getPrice();
+            if(retailPrice.compareTo(productPrice) == 1){
+                retailPrice = productPrice;
+            }
+        }
+        goods.setRetailPrice(retailPrice);
 
         // 商品基本信息表litemall_goods
         if (goodsService.updateById(goods) == 0) {
@@ -234,6 +244,16 @@ public class AdminGoodsService {
         if (goodsService.checkExistByName(name)) {
             return ResponseUtil.fail(AdminResponseCode.GOODS_NAME_EXIST, "商品名已经存在");
         }
+
+        // 商品表里面有一个字段retailPrice记录当前商品的最低价
+        BigDecimal retailPrice = new BigDecimal(Integer.MAX_VALUE);
+        for (LitemallGoodsProduct product : products) {
+            BigDecimal productPrice = product.getPrice();
+            if(retailPrice.compareTo(productPrice) == 1){
+                retailPrice = productPrice;
+            }
+        }
+        goods.setRetailPrice(retailPrice);
 
         // 商品基本信息表litemall_goods
         goodsService.add(goods);
