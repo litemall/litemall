@@ -40,9 +40,9 @@ public class LitemallSystemConfigService {
         return data;
     }
 
-    public Map<String, String> listWx() {
+    public Map<String, String> listApollo() {
         LitemallSystemExample example = new LitemallSystemExample();
-        example.or().andKeyNameLike("litemall_wx_%").andDeletedEqualTo(false);
+        example.or().andKeyNameLike("litemall_apollo_%").andDeletedEqualTo(false);
         List<LitemallSystem> systemList = systemMapper.selectByExample(example);
         Map<String, String> data = new HashMap<>();
         for(LitemallSystem system : systemList){

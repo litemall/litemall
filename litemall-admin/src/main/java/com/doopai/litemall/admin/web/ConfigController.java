@@ -79,15 +79,15 @@ public class ConfigController {
     @RequiresPermissions("admin:config:apollo:list")
     @RequiresPermissionsDesc(menu = {"配置管理", "小程序配置"}, button = "详情")
     @GetMapping("/apollo")
-    public Object listWx() {
-        Map<String, String> data = systemConfigService.listWx();
+    public Object listApollo() {
+        Map<String, String> data = systemConfigService.listApollo();
         return ResponseUtil.ok(data);
     }
 
     @RequiresPermissions("admin:config:apollo:updateConfigs")
     @RequiresPermissionsDesc(menu = {"配置管理", "小程序配置"}, button = "编辑")
     @PostMapping("/apollo")
-    public Object updateWx(@RequestBody String body) {
+    public Object updateApollo(@RequestBody String body) {
         Map<String, String> data = JacksonUtil.toMap(body);
         systemConfigService.updateConfig(data);
         SystemConfig.updateConfigs(data);
